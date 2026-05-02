@@ -1,0 +1,7 @@
+# Advent of Code 2025
+
+## Day 1
+The problem tells us to count how many times we reach 0 in a define number of movement right and left. We see three main scenerios,
+we are between the valid values [0,99], we move too much to the right,overflow over 99,or we move too much to the left, passing 0.
+Also, a round is determined by passing 100 cells,se we want to divide the number of rounds and the internal real movement of the input
+received.
