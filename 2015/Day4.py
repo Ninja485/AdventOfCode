@@ -1,32 +1,35 @@
-import hashlib
+import re
 
 
 def read_input(filename):
     with open(filename) as f:
-        return f.read().strip()
+        return f.read().strip().splitlines()
     return result
 
-def generalFunction(key,lenDemanded):
-    number = 0
-    while hashlib.md5((key + str(number)).encode()).hexdigest()[:lenDemanded] != "0"*lenDemanded:
-        number += 1
-    return number
 
-def part1(key):
-    number = 0
-    while hashlib.md5((key + str(number)).encode()).hexdigest()[:5] != "00000":
-        number += 1
-    return number
+def part1(data):
+    count = 0
+    for string in data:
+        duplicates = re.search(r'([a-z])\1', string)
+        vowels = re.findall(r'[aeiouAEIOU]', string)
+        followingChar = re.search(r'ab|cd|pq|xy', string)
+        if duplicates and len(vowels) >= 3 and not followingChar:
+            count += 1
+    return count
 
-def part2(key):
-    number = 0
-    while hashlib.md5((key + str(number)).encode()).hexdigest()[:6] != "000000":
-        number += 1
-    return number
+
+def part2(data):
+    count = 0
+    for string in data:
+        containsPair = re.search(r'([a-z]{2}).*\1',string)
+        containsBetween = re.search(r'([a-z]).\1',string)
+        if(containsPair and containsBetween):
+            count += 1
+    return count
 
 
 def main():
-    data = "bgvyzdsv"
+    data = read_input("inputDay4.txt")
     print("Part 1:", part1(data))
     print("Part 2:", part2(data))
 
